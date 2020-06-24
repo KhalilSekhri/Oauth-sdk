@@ -1,0 +1,10 @@
+version: "3.4"
+
+services:
+  oauth-server:
+    image: php:apache
+    working_dir: /var/www/html
+    volumes:
+      - ./oauth-server:/var/www/html
+    ports:
+      - 7070:80

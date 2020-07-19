@@ -8,3 +8,11 @@ services:
       - ./oauth-server:/var/www/html
     ports:
       - 7070:80
+
+  oauth-client:
+    image: php:apache
+    working_dir: /var/www/html
+    volumes:
+      - ./oauth-client:/var/www/html
+    ports:
+      - 7071:80

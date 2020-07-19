@@ -27,10 +27,6 @@ function home()
 function callback()
 {
 
-    
-        $provider = new $_GET['state']();
-        $provider->getInfosClient();
-   
     /*
 
     ['code' => $code, 'state' => $rstate] = $_GET;

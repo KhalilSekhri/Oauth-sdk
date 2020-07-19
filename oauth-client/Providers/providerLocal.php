@@ -1,6 +1,6 @@
 <?php
 namespace Providers;
-use Providers\provider;
+use Providers\providerHandler;
 
 class ProviderLocal extends Provider
 {

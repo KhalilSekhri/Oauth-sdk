@@ -1,5 +1,6 @@
 <?php
 namespace Providers;
+use Providers\providerHandler;
 
 class ProviderLinkedin extends Provider
 {
@@ -8,19 +9,18 @@ protected $name = "LinkedInProvider";
 protected $client_id = "77ybkwsf25j6k7";
 protected $client_secret="pHI3BtxnPMdz7xXA";
 protected $url = "https://api.linkedin.com/v2";
+protected $response_type = "code";
 protected $scope = "email";
 protected $state = "LinkedIn";
 protected $accessLink = "https://www.linkedin.com/oauth/v2/authorization";
-protected $uriAuth = "https://www.linkedin.com/oauth/v2/accessToken";
+//protected $redirectUri = "http://localhost:7071/success"";
 
     public function __construct(string $client_id, string $client_secret)
     {
-        arent::__construct($client_id, $client_secret);
-        $this->url= $this->url ."?response_type=code&client_id={$this->client_id}&state={$this->state}&scope={$this->scope}&redirect_uri={$this->redirect_url}";
+        parent::__construct($client_id, $client_secret);
     }
 
-    public function getInfosClient() {
-
+    public function getProviderLinkedIn() {
 
         ['code' => $code, 'state' => $rstate] = $_GET;
     
@@ -37,7 +37,7 @@ protected $uriAuth = "https://www.linkedin.com/oauth/v2/accessToken";
             ['token' => $token] = json_decode(file_get_contents($link), true);
     
             // Get user data
-            $link = "http://oauth-server/me";
+            $link = "https://www.linkedin.com/oauth/v2/authorization";
             $rs = curl_init($link);
             curl_setopt_array($rs, [
                 CURLOPT_RETURNTRANSFER => true,
@@ -54,7 +54,7 @@ protected $uriAuth = "https://www.linkedin.com/oauth/v2/accessToken";
             echo "Invalid state";
 
             
-            $tr = curl_init('https://github.com/login/oauth/access_token');
+            $token = curl_init('https://www.linkedin.com/oauth/v2/accessToken');
             curl_setopt($tr, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($tr, CURLOPT_POSTFIELDS, $post);
             
@@ -67,13 +67,6 @@ protected $uriAuth = "https://www.linkedin.com/oauth/v2/accessToken";
             $parsedToken = explode('=', $responseParams[0]);
             $token = $parsedToken[1];
 
-
-	        echo curl_exec($ufr);
-	        curl_close($ufr);
-	    } else {
-	        http_response_code(400);
-	        echo "Invalid state";
 	    } 
 	} 
-
 }

@@ -1,12 +1,9 @@
 <?php
 session_start();
 
+use Providers\providerLocal;
 use Providers\providerLinkedin;
-
-include "OauthServer.php";
-include "GitlabServer.php";
-include "LinkedInServer.php"; 
-
+use Providers\providerGithub;
 
 function autoloader($className)
 {
@@ -17,15 +14,10 @@ function autoloader($className)
     }
 }
 
-$CLIENT_ID = "client_5edfd43b0db573.88203718";
-$CLIENT_SECRET = "e0a6a1f5c55fafd48cbcce2b7279d4029fad76f4";
-$STATE = "DEAZFAEF321432DAEAFD3E13223R";
-$LOCAL_URL = "http://localhost:7071";
-
 function home()
 {
-    global $CLIENT_ID;
-    global $STATE;
+    global $CLIENT_ID_LOCAL;
+    global $STATE_LOCAL;
     global $LOCAL_URL;
     $link = "http://localhost:7070/auth?response_type=code&client_id={$CLIENT_ID}&state={$STATE}&scope=email&redirect_uri={$LOCAL_URL}/success";
 
@@ -40,9 +32,7 @@ function callback()
         $provider->getInfosClient();
    
     /*
-    global $STATE;
-    global $CLIENT_ID;
-    global $CLIENT_SECRET;
+
     ['code' => $code, 'state' => $rstate] = $_GET;
 
     // Check state origin
